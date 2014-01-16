@@ -24,6 +24,8 @@
 			showDay();
 		}
 		
+		//Test repository
+		
 		public function readXML()
 		{
 			savedCityObject = SharedObject.getLocal("userCityData");
