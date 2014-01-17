@@ -6,6 +6,7 @@
 	import flash.xml.*;
 	import flash.ui.Keyboard;
 	import flash.globalization.DateTimeFormatter;
+	import fl.motion.MotionEvent;
 
 	public class Weather extends MovieClip {
 		
@@ -23,8 +24,6 @@
 			readXML();
 			showDay();
 		}
-		
-		//Test repository
 		
 		public function readXML()
 		{
@@ -111,7 +110,7 @@
 			getDate();
 			getHigh();
 			getLow();
-			/*getMoreInfo();*/
+			getMoreInfo();
 		}
 		
 		public function getForecastID()
@@ -252,34 +251,89 @@
 			}
 		}
 		
-/*		public function getMoreInfo()
-		{
+		public function getMoreInfo()
+		{			
 			for(var i: int = 0; i < 7; i++)
 			{
 				dayArray[i].Humidity.text = "+";
-				dayArray[i].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btnOverHandler);
 				dayArray[i].Humidity.addEventListener(MouseEvent.MOUSE_OUT, btnOutHandler);
 			}
-		}*/
+			
+				dayArray[0].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn0OverHandler);
+				dayArray[1].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn1OverHandler);
+				dayArray[2].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn2OverHandler);
+				dayArray[3].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn3OverHandler);
+				dayArray[4].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn4OverHandler);
+				dayArray[5].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn5OverHandler);
+				dayArray[6].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn6OverHandler);	
+			
+				
+			
+		}
 		
-/*		public function btnOverHandler(e:MouseEvent)
+		function btn0OverHandler(event)
 		{
-			for(var i: int = 0; i < 7; i++)
-			{
-				dayArray[i].Humidity.text = "Humidity: " + myXML.*.time[i].humidity.@value + "%"
-										  + "\nWind: " + myXML.*.time[i].windSpeed.@name + " " + myXML.*.time[i].windDirection.@code
-										  + "\nCloud Cover: " + myXML.*.time[i].clouds.@all + "%"
-										  + "\nPressure: " + myXML.*.time[i].pressure.@value + " hPa";
-			}
-		}*/
+			dayArray[0].Humidity.text = "Humidity: " + myXML.*.time[0].humidity.@value + "%"
+										  + "\nWind: " + myXML.*.time[0].windSpeed.@name + " " + myXML.*.time[0].windDirection.@code
+										  + "\nCloud Cover: " + myXML.*.time[0].clouds.@all + "%"
+										  + "\nPressure: " + myXML.*.time[0].pressure.@value + " hPa";
+		}
 		
-/*		public function btnOutHandler(e:MouseEvent)
+		function btn1OverHandler(event)
+		{
+			dayArray[1].Humidity.text = "Humidity: " + myXML.*.time[1].humidity.@value + "%"
+										  + "\nWind: " + myXML.*.time[1].windSpeed.@name + " " + myXML.*.time[1].windDirection.@code
+										  + "\nCloud Cover: " + myXML.*.time[1].clouds.@all + "%"
+										  + "\nPressure: " + myXML.*.time[1].pressure.@value + " hPa";
+		}
+		
+		function btn2OverHandler(event)
+		{
+			dayArray[2].Humidity.text = "Humidity: " + myXML.*.time[2].humidity.@value + "%"
+										  + "\nWind: " + myXML.*.time[2].windSpeed.@name + " " + myXML.*.time[2].windDirection.@code
+										  + "\nCloud Cover: " + myXML.*.time[2].clouds.@all + "%"
+										  + "\nPressure: " + myXML.*.time[2].pressure.@value + " hPa";
+		}
+		
+		function btn3OverHandler(event)
+		{
+			dayArray[3].Humidity.text = "Humidity: " + myXML.*.time[3].humidity.@value + "%"
+										  + "\nWind: " + myXML.*.time[3].windSpeed.@name + " " + myXML.*.time[3].windDirection.@code
+										  + "\nCloud Cover: " + myXML.*.time[3].clouds.@all + "%"
+										  + "\nPressure: " + myXML.*.time[3].pressure.@value + " hPa";
+		}
+		
+		function btn4OverHandler(event)
+		{
+			dayArray[4].Humidity.text = "Humidity: " + myXML.*.time[4].humidity.@value + "%"
+										  + "\nWind: " + myXML.*.time[4].windSpeed.@name + " " + myXML.*.time[4].windDirection.@code
+										  + "\nCloud Cover: " + myXML.*.time[4].clouds.@all + "%"
+										  + "\nPressure: " + myXML.*.time[4].pressure.@value + " hPa";
+		}
+		
+		function btn5OverHandler(event)
+		{
+			dayArray[5].Humidity.text = "Humidity: " + myXML.*.time[5].humidity.@value + "%"
+										  + "\nWind: " + myXML.*.time[5].windSpeed.@name + " " + myXML.*.time[5].windDirection.@code
+										  + "\nCloud Cover: " + myXML.*.time[5].clouds.@all + "%"
+										  + "\nPressure: " + myXML.*.time[5].pressure.@value + " hPa";
+		}
+		
+		function btn6OverHandler(event)
+		{
+			dayArray[6].Humidity.text = "Humidity: " + myXML.*.time[6].humidity.@value + "%"
+										  + "\nWind: " + myXML.*.time[6].windSpeed.@name + " " + myXML.*.time[6].windDirection.@code
+										  + "\nCloud Cover: " + myXML.*.time[6].clouds.@all + "%"
+										  + "\nPressure: " + myXML.*.time[6].pressure.@value + " hPa";
+		}
+		
+		function btnOutHandler(e: MouseEvent)
 		{
 			for(var i: int = 0; i < 7; i++)
 			{
 				dayArray[i].Humidity.text = "+";
 			}
-		}*/
+		}
 		
 		public function getForecast(id:int)
 		{
