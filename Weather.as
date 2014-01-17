@@ -21,8 +21,9 @@
 		var savedCityObject: SharedObject;
 		
 		public function Weather() {
-			readXML();
+			readXML();	
 			showDay();
+			saveFavoriteCities();
 		}
 		
 		public function readXML()
@@ -239,7 +240,6 @@
 			for(var i: int = 0; i < 7; i++)
 			{
 				dayArray[i].HighTemp.text = "H: " + myXML.*.time[i].temperature.@max + " °F";
-				
 			}
 		}
 		
@@ -265,10 +265,7 @@
 				dayArray[3].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn3OverHandler);
 				dayArray[4].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn4OverHandler);
 				dayArray[5].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn5OverHandler);
-				dayArray[6].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn6OverHandler);	
-			
-				
-			
+				dayArray[6].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn6OverHandler);		
 		}
 		
 		function btn0OverHandler(event)
@@ -386,6 +383,85 @@
 		{
 			myDays = new weather_stage;
 			addChild(myDays);
+		}
+		
+		public function saveFavoriteCities()
+		{
+			myDays.Save1.addEventListener(MouseEvent.CLICK, handleSaveFavoriteCity1);
+			myDays.Save2.addEventListener(MouseEvent.CLICK, handleSaveFavoriteCity2);
+			myDays.Save3.addEventListener(MouseEvent.CLICK, handleSaveFavoriteCity3);
+		}
+		
+		public function handleSaveFavoriteCity1(event)
+		{
+			myDays.Favorite1.text = myDays.CityName.text;
+			savedCityObject.data.saved1 = myDays.CityName.text;
+			
+			myDays.Favorite1.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity1);
+		}
+		
+		public function handleLoadFavoriteCity1(event)
+		{
+			savedCityObject = SharedObject.getLocal("userCityData");
+
+			if(savedCityObject.data.userCity != null)
+			{
+				var city: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + savedCityObject.data.saved1 + "&mode=xml&units=imperial&cnt=7";
+				myLoader.load(new URLRequest(city));
+			}
+			else
+			{
+				trace("Saved City 1 didn't load. There must have been an error.");
+			}
+			myLoader.addEventListener(Event.COMPLETE, processXML);
+		}
+		
+		public function handleSaveFavoriteCity2(event)
+		{
+			myDays.Favorite2.text = myDays.CityName.text;
+			savedCityObject.data.saved2 = myDays.CityName.text;
+			
+			myDays.Favorite2.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity2);
+		}
+		
+		public function handleLoadFavoriteCity2(event)
+		{
+			savedCityObject = SharedObject.getLocal("userCityData");
+
+			if(savedCityObject.data.userCity != null)
+			{
+				var city: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + savedCityObject.data.saved2 + "&mode=xml&units=imperial&cnt=7";
+				myLoader.load(new URLRequest(city));
+			}
+			else
+			{
+				trace("Saved City 2 didn't load. There must have been an error.");
+			}
+			myLoader.addEventListener(Event.COMPLETE, processXML);
+		}
+		
+		public function handleSaveFavoriteCity3(event)
+		{
+			myDays.Favorite3.text = myDays.CityName.text;
+			savedCityObject.data.saved3 = myDays.CityName.text;
+			
+			myDays.Favorite3.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity3);
+		}
+		
+		public function handleLoadFavoriteCity3(event)
+		{
+			savedCityObject = SharedObject.getLocal("userCityData");
+
+			if(savedCityObject.data.userCity != null)
+			{
+				var city: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + savedCityObject.data.saved3 + "&mode=xml&units=imperial&cnt=7";
+				myLoader.load(new URLRequest(city));
+			}
+			else
+			{
+				trace("Saved City 1 didn't load. There must have been an error.");
+			}
+			myLoader.addEventListener(Event.COMPLETE, processXML);
 		}
 	}
 }
