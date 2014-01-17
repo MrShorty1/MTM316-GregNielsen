@@ -45,6 +45,24 @@
 		public function processXML(e: Event): void {
 			myXML = new XML(e.target.data);
 			
+			if(savedCityObject.data.saved1 != null)
+			{
+				myDays.Favorite1.text = savedCityObject.data.saved1;
+				myDays.Favorite1.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity1);
+			}
+			
+			if(savedCityObject.data.saved2 != null)
+			{
+				myDays.Favorite2.text = savedCityObject.data.saved2;
+				myDays.Favorite2.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity2);
+			}
+			
+			if(savedCityObject.data.saved3 != null)
+			{
+				myDays.Favorite3.text = savedCityObject.data.saved3;
+				myDays.Favorite3.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity3);
+			}
+			
 			myDays.CityName.text = myXML.location.name;
 			myDays.CityNameInput.text = "Enter City Here";
 			
@@ -52,6 +70,7 @@
 			myDays.CityNameInput.addEventListener(MouseEvent.CLICK, handleCityInputClick);
 			
 			fillAllArrays();
+			displayUpdatedDate();
 			
 			savedCityObject = SharedObject.getLocal("userCityData");
 			savedCityObject.data.userCity = myDays.CityName.text;
@@ -85,7 +104,6 @@
 					var newCity:String = myDays.CityNameInput.text;
 					var cityInputURL: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + newCity + "&mode=xml&units=imperial&cnt=7&&nocache" + new Date().getTime();
 					myLoader.load(new URLRequest(cityInputURL));
-					displayUpdatedDate();
 					
 					myDays.CityNameInput.text = "Enter City Here";
 					
@@ -396,15 +414,13 @@
 		{
 			myDays.Favorite1.text = myDays.CityName.text;
 			savedCityObject.data.saved1 = myDays.CityName.text;
-			
-			myDays.Favorite1.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity1);
 		}
 		
 		public function handleLoadFavoriteCity1(event)
 		{
 			savedCityObject = SharedObject.getLocal("userCityData");
 
-			if(savedCityObject.data.userCity != null)
+			if(savedCityObject.data.saved1 != null)
 			{
 				var city: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + savedCityObject.data.saved1 + "&mode=xml&units=imperial&cnt=7";
 				myLoader.load(new URLRequest(city));
@@ -420,15 +436,13 @@
 		{
 			myDays.Favorite2.text = myDays.CityName.text;
 			savedCityObject.data.saved2 = myDays.CityName.text;
-			
-			myDays.Favorite2.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity2);
 		}
 		
 		public function handleLoadFavoriteCity2(event)
 		{
 			savedCityObject = SharedObject.getLocal("userCityData");
 
-			if(savedCityObject.data.userCity != null)
+			if(savedCityObject.data.saved2 != null)
 			{
 				var city: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + savedCityObject.data.saved2 + "&mode=xml&units=imperial&cnt=7";
 				myLoader.load(new URLRequest(city));
@@ -444,15 +458,13 @@
 		{
 			myDays.Favorite3.text = myDays.CityName.text;
 			savedCityObject.data.saved3 = myDays.CityName.text;
-			
-			myDays.Favorite3.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity3);
 		}
 		
 		public function handleLoadFavoriteCity3(event)
 		{
 			savedCityObject = SharedObject.getLocal("userCityData");
 
-			if(savedCityObject.data.userCity != null)
+			if(savedCityObject.data.saved3 != null)
 			{
 				var city: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + savedCityObject.data.saved3 + "&mode=xml&units=imperial&cnt=7";
 				myLoader.load(new URLRequest(city));
