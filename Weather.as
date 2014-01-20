@@ -234,13 +234,13 @@
 				dayArray[i].Humidity.addEventListener(MouseEvent.MOUSE_OUT, btnOutHandler);
 			}
 
-			dayArray[0].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn0OverHandler);
-			dayArray[1].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn1OverHandler);
-			dayArray[2].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn2OverHandler);
-			dayArray[3].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn3OverHandler);
-			dayArray[4].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn4OverHandler);
-			dayArray[5].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn5OverHandler);
-			dayArray[6].Humidity.addEventListener(MouseEvent.MOUSE_OVER, btn6OverHandler);
+			myDays.MoreInfo1.addEventListener(MouseEvent.MOUSE_OVER, btn0OverHandler);
+			myDays.MoreInfo2.addEventListener(MouseEvent.MOUSE_OVER, btn1OverHandler);
+			myDays.MoreInfo3.addEventListener(MouseEvent.MOUSE_OVER, btn2OverHandler);
+			myDays.MoreInfo4.addEventListener(MouseEvent.MOUSE_OVER, btn3OverHandler);
+			myDays.MoreInfo5.addEventListener(MouseEvent.MOUSE_OVER, btn4OverHandler);
+			myDays.MoreInfo6.addEventListener(MouseEvent.MOUSE_OVER, btn5OverHandler);
+			myDays.MoreInfo7.addEventListener(MouseEvent.MOUSE_OVER, btn6OverHandler);
 		}
 
 		function btn0OverHandler(event) {
