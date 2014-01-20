@@ -75,14 +75,17 @@
 		public function handleCityInput(e: KeyboardEvent) {
 			if (e.charCode == 13) {
 				var newCity: String = myDays.CityNameInput.text;
-				var cityInputURL: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + newCity + "&mode=xml&units=imperial&cnt=7&&nocache" + new Date().getTime();
-				myLoader.load(new URLRequest(cityInputURL));
-				displayUpdatedDate();
 
+				if(newCity != "")
+				{
+					var cityInputURL: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + newCity + "&mode=xml&units=imperial&cnt=7&&nocache" + new Date().getTime();
+					myLoader.load(new URLRequest(cityInputURL));
+					displayUpdatedDate();
 
-				myDays.CityNameInput.text = "Enter City Here";
+					myDays.CityNameInput.text = "Enter City Here";
 
-				myLoader.addEventListener(Event.COMPLETE, processXML);
+					myLoader.addEventListener(Event.COMPLETE, processXML);
+				}
 			}
 		}
 
