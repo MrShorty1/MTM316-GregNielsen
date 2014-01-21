@@ -30,8 +30,15 @@
 			savedCityObject = SharedObject.getLocal("userCityData");
 
 			if (savedCityObject.data.userCity != null) {
-				var cityInputURL: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + savedCityObject.data.userCity + "&mode=xml&units=imperial&cnt=7";
-				myLoader.load(new URLRequest(cityInputURL));
+				try{
+					var cityInputURL: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + savedCityObject.data.userCity + "&mode=xml&units=imperial&cnt=7";
+					myLoader.load(new URLRequest(cityInputURL));
+				}
+				catch(e: Error)
+				{
+					trace("Error");
+				}
+				
 			} else {
 				myLoader.load(new URLRequest("http://api.openweathermap.org/data/2.5/forecast/daily?q=Salt+Lake+City,UT&mode=xml&units=imperial&cnt=7"));
 			}
