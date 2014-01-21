@@ -30,15 +30,10 @@
 			savedCityObject = SharedObject.getLocal("userCityData");
 
 			if (savedCityObject.data.userCity != null) {
-				try{
-					var cityInputURL: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + savedCityObject.data.userCity + "&mode=xml&units=imperial&cnt=7";
-					myLoader.load(new URLRequest(cityInputURL));
-				}
-				catch(e: Error)
-				{
-					trace("Error");
-				}
-				
+
+				var cityInputURL: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + savedCityObject.data.userCity + "&mode=xml&units=imperial&cnt=7";
+				myLoader.load(new URLRequest(cityInputURL));
+
 			} else {
 				myLoader.load(new URLRequest("http://api.openweathermap.org/data/2.5/forecast/daily?q=Salt+Lake+City,UT&mode=xml&units=imperial&cnt=7"));
 			}
@@ -51,40 +46,80 @@
 			if (savedCityObject.data.saved1 != null) {
 				myDays.Favorite1.text = savedCityObject.data.saved1;
 				myDays.LoadFav1.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity1);
-				//myDays.Favorite1.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity1);
 			}
 
 			if (savedCityObject.data.saved2 != null) {
 				myDays.Favorite2.text = savedCityObject.data.saved2;
 				myDays.LoadFav2.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity2);
-				//myDays.Favorite2.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity2);
 			}
 
 			if (savedCityObject.data.saved3 != null) {
 				myDays.Favorite3.text = savedCityObject.data.saved3;
 				myDays.LoadFav3.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity3);
-				//myDays.Favorite3.addEventListener(MouseEvent.CLICK, handleLoadFavoriteCity3);
 			}
 
-			myDays.CityName.text = myXML.location.name;
-			myDays.CityNameInput.text = "Enter City Here";
+			try {
+				if (myXML.location.name != "") {
 
-			myDays.CityNameInput.addEventListener(KeyboardEvent.KEY_DOWN, handleCityInput);
-			myDays.CityNameInput.addEventListener(MouseEvent.CLICK, handleCityInputClick);
+					myDays.CityName.text = myXML.location.name;
+					myDays.CityNameInput.text = "Enter City Here";
 
-			fillAllArrays();
-			displayUpdatedDate();
+					myDays.CityNameInput.addEventListener(KeyboardEvent.KEY_DOWN, handleCityInput);
+					myDays.CityNameInput.addEventListener(MouseEvent.CLICK, handleCityInputClick);
 
-			savedCityObject = SharedObject.getLocal("userCityData");
-			savedCityObject.data.userCity = myDays.CityName.text;
+					fillAllArrays();
+					displayUpdatedDate();
+
+					savedCityObject = SharedObject.getLocal("userCityData");
+					savedCityObject.data.userCity = myDays.CityName.text;
+
+					myDays.CityNameInputError.text = "";
+					brightenDaysAlpha();
+
+				} else {
+					trace("Cannot find city in our system.");
+				}
+			} catch (e: Error) {
+				myDays.CityNameInputError.text = "That is not a city name.";
+				fadeDaysAlpha();
+			}
+		}
+
+		public function fadeDaysAlpha() {
+			myDays.Save1.visible = false;
+			myDays.Save2.visible = false;
+			myDays.Save3.visible = false;
+
+			myDays.Day1.alpha = .5;
+			myDays.Day2.alpha = .5;
+			myDays.Day3.alpha = .5;
+			myDays.Day4.alpha = .5;
+			myDays.Day5.alpha = .5;
+			myDays.Day6.alpha = .5;
+			myDays.Day7.alpha = .5;
+			myDays.UpdatedDate.alpha = .5;
+		}
+
+		public function brightenDaysAlpha() {
+			myDays.Save1.visible = true;
+			myDays.Save2.visible = true;
+			myDays.Save3.visible = true;
+
+			myDays.Day1.alpha = 1;
+			myDays.Day2.alpha = 1;
+			myDays.Day3.alpha = 1;
+			myDays.Day4.alpha = 1;
+			myDays.Day5.alpha = 1;
+			myDays.Day6.alpha = 1;
+			myDays.Day7.alpha = 1;
+			myDays.UpdatedDate.alpha = 1;
 		}
 
 		public function handleCityInput(e: KeyboardEvent) {
 			if (e.charCode == 13) {
 				var newCity: String = myDays.CityNameInput.text;
 
-				if(newCity != "")
-				{
+				if (newCity != "") {
 					var cityInputURL: String = "http://api.openweathermap.org/data/2.5/forecast/daily?q=" + newCity + "&mode=xml&units=imperial&cnt=7&&nocache" + new Date().getTime();
 					myLoader.load(new URLRequest(cityInputURL));
 					displayUpdatedDate();
@@ -251,31 +286,61 @@
 		}
 
 		function btn0OverHandler(event) {
-			dayArray[0].Humidity.text = "Humidity: " + myXML.*.time[0].humidity.@value + "%" + "\nWind: " + myXML.*.time[0].windSpeed.@name + " " + myXML.*.time[0].windDirection.@code + "\nCloud Cover: " + myXML.*.time[0].clouds.@all + "%" + "\nPressure: " + myXML.*.time[0].pressure.@value + " hPa";
+			try {
+				dayArray[0].Humidity.text = "Humidity: " + myXML.*.time[0].humidity.@value + "%" + "\nWind: " + myXML.*.time[0].windSpeed.@name + " " + myXML.*.time[0].windDirection.@code + "\nCloud Cover: " + myXML.*.time[0].clouds.@all + "%" + "\nPressure: " + myXML.*.time[0].pressure.@value + " hPa";
+			} catch (e: Error) {
+				myDays.CityNameInputError.text = "Type in a valid city to view this information.";
+			}
+
 		}
 
 		function btn1OverHandler(event) {
-			dayArray[1].Humidity.text = "Humidity: " + myXML.*.time[1].humidity.@value + "%" + "\nWind: " + myXML.*.time[1].windSpeed.@name + " " + myXML.*.time[1].windDirection.@code + "\nCloud Cover: " + myXML.*.time[1].clouds.@all + "%" + "\nPressure: " + myXML.*.time[1].pressure.@value + " hPa";
+			try {
+				dayArray[1].Humidity.text = "Humidity: " + myXML.*.time[1].humidity.@value + "%" + "\nWind: " + myXML.*.time[1].windSpeed.@name + " " + myXML.*.time[1].windDirection.@code + "\nCloud Cover: " + myXML.*.time[1].clouds.@all + "%" + "\nPressure: " + myXML.*.time[1].pressure.@value + " hPa";
+			} catch (e: Error) {
+				myDays.CityNameInputError.text = "Type in a valid city to view this information.";
+			}
+
 		}
 
 		function btn2OverHandler(event) {
-			dayArray[2].Humidity.text = "Humidity: " + myXML.*.time[2].humidity.@value + "%" + "\nWind: " + myXML.*.time[2].windSpeed.@name + " " + myXML.*.time[2].windDirection.@code + "\nCloud Cover: " + myXML.*.time[2].clouds.@all + "%" + "\nPressure: " + myXML.*.time[2].pressure.@value + " hPa";
+			try {
+				dayArray[2].Humidity.text = "Humidity: " + myXML.*.time[2].humidity.@value + "%" + "\nWind: " + myXML.*.time[2].windSpeed.@name + " " + myXML.*.time[2].windDirection.@code + "\nCloud Cover: " + myXML.*.time[2].clouds.@all + "%" + "\nPressure: " + myXML.*.time[2].pressure.@value + " hPa";
+			} catch (e: Error) {
+				myDays.CityNameInputError.text = "Type in a valid city to view this information.";
+			}
 		}
 
 		function btn3OverHandler(event) {
-			dayArray[3].Humidity.text = "Humidity: " + myXML.*.time[3].humidity.@value + "%" + "\nWind: " + myXML.*.time[3].windSpeed.@name + " " + myXML.*.time[3].windDirection.@code + "\nCloud Cover: " + myXML.*.time[3].clouds.@all + "%" + "\nPressure: " + myXML.*.time[3].pressure.@value + " hPa";
+			try {
+				dayArray[3].Humidity.text = "Humidity: " + myXML.*.time[3].humidity.@value + "%" + "\nWind: " + myXML.*.time[3].windSpeed.@name + " " + myXML.*.time[3].windDirection.@code + "\nCloud Cover: " + myXML.*.time[3].clouds.@all + "%" + "\nPressure: " + myXML.*.time[3].pressure.@value + " hPa";
+			} catch (e: Error) {
+				myDays.CityNameInputError.text = "Type in a valid city to view this information.";
+			}
 		}
 
 		function btn4OverHandler(event) {
-			dayArray[4].Humidity.text = "Humidity: " + myXML.*.time[4].humidity.@value + "%" + "\nWind: " + myXML.*.time[4].windSpeed.@name + " " + myXML.*.time[4].windDirection.@code + "\nCloud Cover: " + myXML.*.time[4].clouds.@all + "%" + "\nPressure: " + myXML.*.time[4].pressure.@value + " hPa";
+			try {
+				dayArray[4].Humidity.text = "Humidity: " + myXML.*.time[4].humidity.@value + "%" + "\nWind: " + myXML.*.time[4].windSpeed.@name + " " + myXML.*.time[4].windDirection.@code + "\nCloud Cover: " + myXML.*.time[4].clouds.@all + "%" + "\nPressure: " + myXML.*.time[4].pressure.@value + " hPa";
+			} catch (e: Error) {
+				myDays.CityNameInputError.text = "Type in a valid city to view this information.";
+			}
 		}
 
 		function btn5OverHandler(event) {
-			dayArray[5].Humidity.text = "Humidity: " + myXML.*.time[5].humidity.@value + "%" + "\nWind: " + myXML.*.time[5].windSpeed.@name + " " + myXML.*.time[5].windDirection.@code + "\nCloud Cover: " + myXML.*.time[5].clouds.@all + "%" + "\nPressure: " + myXML.*.time[5].pressure.@value + " hPa";
+			try {
+				dayArray[5].Humidity.text = "Humidity: " + myXML.*.time[5].humidity.@value + "%" + "\nWind: " + myXML.*.time[5].windSpeed.@name + " " + myXML.*.time[5].windDirection.@code + "\nCloud Cover: " + myXML.*.time[5].clouds.@all + "%" + "\nPressure: " + myXML.*.time[5].pressure.@value + " hPa";
+			} catch (e: Error) {
+				myDays.CityNameInputError.text = "Type in a valid city to view this information.";
+			}
 		}
 
 		function btn6OverHandler(event) {
-			dayArray[6].Humidity.text = "Humidity: " + myXML.*.time[6].humidity.@value + "%" + "\nWind: " + myXML.*.time[6].windSpeed.@name + " " + myXML.*.time[6].windDirection.@code + "\nCloud Cover: " + myXML.*.time[6].clouds.@all + "%" + "\nPressure: " + myXML.*.time[6].pressure.@value + " hPa";
+			try {
+				dayArray[6].Humidity.text = "Humidity: " + myXML.*.time[6].humidity.@value + "%" + "\nWind: " + myXML.*.time[6].windSpeed.@name + " " + myXML.*.time[6].windDirection.@code + "\nCloud Cover: " + myXML.*.time[6].clouds.@all + "%" + "\nPressure: " + myXML.*.time[6].pressure.@value + " hPa";
+			} catch (e: Error) {
+				myDays.CityNameInputError.text = "Type in a valid city to view this information.";
+			}
 		}
 
 		function btnOutHandler(e: MouseEvent) {
